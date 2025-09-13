@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CityZhor - Выбор версии</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #e74c3c;
+            --accent: #3498db;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #2ecc71;
+            --background: #1a1a2e;
+            --card-bg: #16213e;
+            --text: #f0f0f0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--background) 0%, #0f3460 100%);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding-bottom: 2rem;
+        }
+        
+        header {
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            margin-bottom: 2rem;
+        }
+        
+        .logo {
+            font-size: 2.8rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: var(--secondary);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .logo i {
+            margin-right: 15px;
+            color: var(--accent);
+        }
+        
+        .tagline {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .intro {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+        }
+        
+        .intro h2 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+            font-size: 2rem;
+        }
+        
+        .intro p {
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .filter {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: 0.7rem 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .versions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .version-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .version-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        }
+        
+        .version-header {
+            padding: 1.5rem;
+            background: var(--primary);
+            color: white;
+            text-align: center;
+            position: relative;
+        }
+        
+        .version-number {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+        }
+        
+        .version-date {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .version-badge {
+            position: absolute;
+            top: -10px;
+            right: 20px;
+            background: var(--secondary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .version-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .version-features {
+            list-style-type: none;
+            margin: 1rem 0;
+            flex-grow: 1;
+        }
+        
+        .version-features li {
+            padding: 0.7rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+        }
+        
+        .version-features li:last-child {
+            border-bottom: none;
+        }
+        
+        .version-features li::before {
+            content: "•";
+            color: var(--accent);
+            margin-right: 0.8rem;
+            font-size: 1.5rem;
+        }
+        
+        .play-btn {
+            display: block;
+            padding: 1rem;
+            background: var(--success);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: background 0.3s ease, transform 0.2s;
+            text-align: center;
+            margin-top: 1rem;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+        
+        .play-btn:hover {
+            background: #27ae60;
+            transform: scale(1.05);
+        }
+        
+        .play-btn i {
+            margin-left: 8px;
+        }
+        
+        footer {
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            border-radius: 15px 15px 0 0;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            margin: 0 auto;
+            gap: 2rem;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .footer-section h3 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+        
+        .social-icons a {
+            color: var(--text);
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+        
+        .social-icons a:hover {
+            color: var(--accent);
+        }
+        
+        @media (max-width: 768px) {
+            .versions-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .logo {
+                font-size: 2.2rem;
+            }
+            
+            .intro h2 {
+                font-size: 1.7rem;
+            }
+        }
+        
+        .version-card.stable .version-badge {
+            background: var(--success);
+        }
+        
+        .version-card.beta .version-badge {
+            background: var(--accent);
+        }
+        
+        .version-card.alpha .version-badge {
+            background: var(--secondary);
+        }
+        
+        .version-card.legacy .version-badge {
+            background: #9b59b6;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <i class="fas fa-city"></i>
+            <span>CITYZHOR</span>
+        </div>
+        <div class="tagline">Выберите версию игры</div>
+    </header>
+    
+    <div class="container">
+        <div class="intro">
+            <h2>Добро пожаловать в CityZhor!</h2>
+            <p>CityZhor - это увлекательная браузерная игра. Выберите подходящую версию игры из списка ниже.</p>
+        </div>
+        
+        <div class="filter">
+            <button class="filter-btn active" data-filter="all">Все версии</button>
+            <button class="filter-btn" data-filter="stable">Стабильные</button>
+            <button class="filter-btn" data-filter="beta">Бета-версии</button>
+            <button class="filter-btn" data-filter="alpha">Альфа-версии</button>
+        </div>
+        
+        <div class="versions-grid">
+            <div class="version-card stable" data-category="beta">
+                <div class="version-header">
+                    <div class="version-badge">Бета</div>
+                    <div class="version-number">0.0.0.1</div>
+                    <div class="version-date">Выпущена: 09.12.2025</div>
+                </div>
+                <div class="version-content">
+                    <ul class="version-features">
+                        <li>Игра выпущена</li>
+                        <li>Игра выпущена</li>
+                        <li>Игра выпущена</li>
+                        <li>Игра выпущена</li>
+                    </ul>
+                    <a href="https://zhoriksclan.github.io/cityzhor_v0.0.0.1/" class="play-btn">Играть <i class="fas fa-play-circle"></i></a>
+                </div>
+            </div>
+
+            <div class="version-card legacy" data-category="legacy">
+                <div class="version-header">
+                    <div class="version-badge">test</div>
+                    <div class="version-number">test</div>
+                    <div class="version-date">test</div>
+                </div>
+                <div class="version-content">
+                    <ul class="version-features">
+                        <li>test</li>
+                        <li>test</li>
+                        <li>test</li>
+                        <li>test</li>
+                    </ul>
+                    <a href="test" class="play-btn">test<i class="fas fa-play-circle"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>О CityZhor</h3>
+                <p>CityZhor - это браузерная игра</p>
+            </div>
+            <div class="footer-section">
+                <h3>Свяжитесь с нами</h3>
+                <p>Email: v83127417@gmail.com</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-vk"></i></a>
+                    <a href="#"><i class="fab fa-telegram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-discord"></i></a>
+                </div>
+            </div>
+        </div>
+        <p style="margin-top: 2rem;">© 2025 CityZhor Game. Все права защищены.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const versionCards = document.querySelectorAll('.version-card');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const filter = this.getAttribute('data-filter');
+                    
+                    // Убираем активный класс у всех кнопок и добавляем текущей
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Фильтруем карточки
+                    versionCards.forEach(card => {
+                        if (filter === 'all' || card.getAttribute('data-category') === filter) {
+                            card.style.display = 'flex';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+            
+            // Добавляем анимацию появления карточек
+            setTimeout(() => {
+                versionCards.forEach((card, index) => {
+                    setTimeout(() => {
+                        card.style.opacity = 1;
+                        card.style.transform = 'translateY(0)';
+                    }, index * 100);
+                });
+            }, 500);
+            
+            // Изначально устанавливаем прозрачность и положение для анимации
+            versionCards.forEach(card => {
+                card.style.opacity = 0;
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            });
+        });
+    </script>
+</body>
+</html>
